@@ -1,0 +1,11 @@
+import {Hono} from 'hono';
+import {DriverController} from '../controllers/DriverController.js';
+import type {Context} from 'hono';
+const driverRoutes = new Hono();
+const driverController = new DriverController();
+driverRoutes.get('/',(c)=>driverController.getAllDriversController(c));
+driverRoutes.get('/:id',(c)=>driverController.gerDriverByIdController(c));
+driverRoutes.post('/',(c)=>driverController.addDriver(c));
+driverRoutes.put('/:id',(c)=>driverController.updateDriver(c));
+driverRoutes.delete('/:id',(c)=>driverController.deleteDriver(c));
+export { driverRoutes };

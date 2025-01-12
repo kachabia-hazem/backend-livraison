@@ -1,0 +1,11 @@
+import {Hono} from 'hono';
+import {MaintenanceController} from '../controllers/maintenanceController.js';
+import type {Context} from 'hono';
+const maintenanceRoutes = new Hono();
+const maintenanceController = new MaintenanceController();
+maintenanceRoutes.get('/maintenances',(c)=>maintenanceController.getAllMaintenancesController(c));
+maintenanceRoutes.get('/maintenances/:id',(c)=>maintenanceController.getMaintenanceByIdController(c));
+maintenanceRoutes.post('/maintenances',(c)=>maintenanceController.addMaintenanceController(c));
+maintenanceRoutes.put('/maintenances/:id',(c)=>maintenanceController.updateMaintenanceController(c));
+maintenanceRoutes.delete('/maintenances/:id',(c)=>maintenanceController.deleteMaintenanceController(c));
+export { maintenanceRoutes };

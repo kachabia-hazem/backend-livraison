@@ -1,0 +1,11 @@
+import {Hono} from 'hono';
+import {SupplierController} from '../controllers/SupplierController.js';
+import type {Context} from 'hono';
+const supplierRoutes = new Hono();
+const supplierController = new SupplierController();
+supplierRoutes.get('/suppliers',(c)=>supplierController.getAllSuppliersController(c));
+supplierRoutes.get('/suppliers/:id',(c)=>supplierController.getSupplierByIdController(c));
+supplierRoutes.post('/suppliers',(c)=>supplierController.addSupplierController(c));
+supplierRoutes.put('/suppliers/:id',(c)=>supplierController.updateSupplierController(c));
+supplierRoutes.delete('/suppliers/:id',(c)=>supplierController.deleteSupplierController(c));
+export { supplierRoutes };

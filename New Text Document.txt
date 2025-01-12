@@ -1,0 +1,29 @@
+import { Pool } from 'pg'; // Import PostgreSQL client
+import { drizzle } from 'drizzle-orm'; // Import drizzle ORM
+import { drizzlePg } from 'drizzle-orm-pg'; // Import drizzle-pg for PostgreSQL compatibility
+import { chauffeurs, fournisseur, vehicule, reparation, secteur, trajet, admin, entretien } from './schema'; // Import your schema
+
+// PostgreSQL client setup
+const pool = new Pool({
+  user: 'your_username',
+  host: 'localhost',
+  database: 'your_database_name',
+  password: 'your_password',
+  port: 5432,
+});
+
+// Connect to PostgreSQL using drizzle ORM
+const db = drizzle(pool, { schema: [chauffeurs, fournisseur, vehicule, reparation, secteur, trajet, admin, entretien] });
+
+// Example: Query to fetch chauffeurs
+async function getChauffeurs() {
+  try {
+    const chauffeursList = await db.select().from(chauffeurs);
+    console.log(chauffeursList);
+  } catch (error) {
+    console.error('Error fetching chauffeurs:', error);
+  }
+}
+
+// Call the function
+getChauffeurs();

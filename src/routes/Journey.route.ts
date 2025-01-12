@@ -1,0 +1,11 @@
+import {Hono} from 'hono';
+import {JourneyController} from '../controllers/JourneyController.js';
+import type {Context} from 'hono';
+const journeyRoutes = new Hono();
+const journeyController = new JourneyController();
+journeyRoutes.get('/journeys',(c)=>journeyController.getAllJourneysController(c));
+journeyRoutes.get('/journeys/:id',(c)=>journeyController.getJourneyByIdController(c));
+journeyRoutes.post('/journeys',(c)=>journeyController.addJourneyController(c));
+journeyRoutes.put('/journeys/:id',(c)=>journeyController.updateJourneyController(c));
+journeyRoutes.delete('/journeys/:id',(c)=>journeyController.deleteJourneyController(c));
+export { journeyRoutes };

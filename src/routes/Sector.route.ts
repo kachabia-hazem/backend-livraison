@@ -1,0 +1,11 @@
+import {Hono} from 'hono';
+import {SectorController} from '../controllers/SectorController.js';
+import type {Context} from 'hono';
+const sectorRoutes = new Hono();
+const sectorController = new SectorController();
+sectorRoutes.get('/sectors',(c)=>sectorController.getAllSectorsController(c));
+sectorRoutes.get('/sectors/:id',(c)=>sectorController.getSectorByIdController(c));
+sectorRoutes.post('/sectors',(c)=>sectorController.addSectorController(c));
+sectorRoutes.put('/sectors/:id',(c)=>sectorController.updateSectorController(c));
+sectorRoutes.delete('/sectors/:id',(c)=>sectorController.deleteSectorController(c));
+export { sectorRoutes };

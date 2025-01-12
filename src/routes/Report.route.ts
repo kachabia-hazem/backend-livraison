@@ -1,0 +1,11 @@
+import {Hono} from 'hono';
+import {ReportController} from '../controllers/ReportController.js';
+import type {Context} from 'hono';
+const reportRoutes = new Hono();
+const reportController = new ReportController();
+reportRoutes.get('/reports',(c)=>reportController.getAllReportsController(c));
+reportRoutes.get('/reports/:id',(c)=>reportController.getReportByIdController(c));
+reportRoutes.post('/reports',(c)=>reportController.addReportController(c));
+reportRoutes.put('/reports/:id',(c)=>reportController.updateReportController(c));
+reportRoutes.delete('/reports/:id',(c)=>reportController.deleteReportController(c));
+export { reportRoutes };

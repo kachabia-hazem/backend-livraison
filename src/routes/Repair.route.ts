@@ -1,0 +1,11 @@
+import {Hono} from 'hono';
+import {RepairController} from '../controllers/RepairController.js';
+import type {Context} from 'hono';
+const repairRoutes = new Hono();
+const repairController = new RepairController();
+repairRoutes.get('/repairs',(c)=>repairController.getAllRepairsController(c));
+repairRoutes.get('/repairs/:id',(c)=>repairController.getRepairByIdController(c));
+repairRoutes.post('/repairs',(c)=>repairController.addRepairController(c));
+repairRoutes.put('/repairs/:id',(c)=>repairController.updateRepairController(c));
+repairRoutes.delete('/repairs/:id',(c)=>repairController.deleteRepairController(c));
+export default repairRoutes;

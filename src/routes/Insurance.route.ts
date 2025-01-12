@@ -1,0 +1,11 @@
+import {Hono} from 'hono';
+import {InsuranceController} from '../controllers/InsuranceController.js';
+import type {Context} from 'hono';
+const insuranceRoutes = new Hono();
+const insuranceController = new InsuranceController();
+insuranceRoutes.get('/insurances',(c)=>insuranceController.getAllInsurancesController(c));
+insuranceRoutes.get('/insurances/:id',(c)=>insuranceController.getInsuranceByIdController(c));
+insuranceRoutes.post('/insurances',(c)=>insuranceController.addInsuranceController(c));
+insuranceRoutes.put('/insurances/:id',(c)=>insuranceController.updateInsuranceController(c));
+insuranceRoutes.delete('/insurances/:id',(c)=>insuranceController.deleteInsurancController(c));
+export { insuranceRoutes };
