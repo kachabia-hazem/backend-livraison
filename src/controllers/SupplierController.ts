@@ -21,23 +21,23 @@ import { addSupplier, deleteSupplier, getAllSuppliers, getSupplierById, updateSu
                 return c.json({ message: 'Error fetching supplier', error }, 500);
             }
         }
-        async addSupplierController(c: Context) {
-            try {
-                const { name,
-                    address,
-                    contact,
-                    service,
-                    overallRating} = await c.req.json();
-                const newSupplier = await addSupplier( name,
-                    address,
-                    contact,
-                    service,
-                    overallRating,);
-                return c.json(newSupplier, 201);
-            } catch (error) {
-                return c.json({ message: 'Error adding supplier', error }, 500);
+            async addSupplierController(c: Context) {
+                try {
+                    const { name,
+                        address,
+                        contact,
+                        service,
+                        overallRating} = await c.req.json();
+                    const newSupplier = await addSupplier( name,
+                        address,
+                        contact,
+                        service,
+                        overallRating,);
+                    return c.json(newSupplier, 201);
+                } catch (error) {
+                    return c.json({ message: 'Error adding supplier', error }, 500);
+                }
             }
-        }
         async updateSupplierController(c: Context) {
             try {
                 const id = Number(c.req.param('id'));

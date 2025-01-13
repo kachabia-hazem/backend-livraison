@@ -14,18 +14,33 @@ export async function addRepair(
             repairCost:string,
             repairDate:Date,
             vehicleId:string,
-            createdAt:Date,
-            updatedAt:Date
+            
     ) {
+        try {
+            const parsedRepairDate = new Date(repairDate);
+            if (isNaN(parsedRepairDate.getTime())) {
+                throw new Error('Invalid repair date');
+            }
+        
+
         return await db.insert(repair).values({
             driverId,
             failureType,
             repairCost,
-            repairDate,
+            repairDate: parsedRepairDate,
             vehicleId,
-            createdAt,
-            updatedAt
+            
         })
+    } catch (err) {
+        if (err instanceof Error) {
+          console.error('Error in Repair:', err.message);
+          throw new Error('Failed to add insurance: ' + err.message);
+        } else {
+          console.error('Unknown error in addInsurance:', err);
+          throw new Error('Failed to add insurance due to an unknown error');
+        }
+      }
+        
     }
 export async function updateRepair(id: number, 
             driverId:string,

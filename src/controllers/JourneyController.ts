@@ -30,10 +30,9 @@ export class JourneyController {
                 vehicleId,
                 actualRoute,
                 costAllocation,
-                status,
-                createdAt,
-                updatedAt} = await c.req.json();
-                 await addJourney(driverId,
+                status,} = await c.req.json();
+                 await addJourney(
+                driverId,
                 startDateTime,
                 startLocation,
                 endLocation,
@@ -41,8 +40,7 @@ export class JourneyController {
                 actualRoute,
                 costAllocation,
                 status,
-                createdAt,
-                updatedAt);
+);
             return c.json(201);
         } catch (error) {
             return c.json({ message: 'Error adding journey', error }, 500);
@@ -51,7 +49,8 @@ export class JourneyController {
     async updateJourneyController(c: Context) {
         try {
             const id = Number(c.req.param('id'));
-            const {driverId,
+            const {
+                driverId,
                 startDateTime,
                 startLocation,
                 endLocation,

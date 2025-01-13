@@ -24,22 +24,22 @@ export class InsuranceController {
     }
     async addInsuranceController(c: Context) {
         try {
-            const {dateInsurence,
+            const {
+                vehicleId,
+                type,
+                provider,
+                dateInsurence,
+                insuranceExpiryDate,
+                price 
+            } = await c.req.json();
+             await addInsurance(
+                vehicleId,
+                type,
+                provider,
+                dateInsurence,
                 insuranceExpiryDate,
                 price,
-                provider,
-                type,
-                vehicleId,
-                createdAt,
-                updatedAt} = await c.req.json();
-             await addInsurance(dateInsurence,
-                insuranceExpiryDate,
-                price,
-                provider,
-                type,
-                vehicleId,
-                createdAt,
-                updatedAt);
+                );
             return c.json(201);
         } catch (error) {
             return c.json({ message: 'Error adding insurance', error }, 500);

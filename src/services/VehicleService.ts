@@ -19,47 +19,96 @@ export async function addVehicle(
     year: number,
     registrationNumber: string,
     vin: string,
-    status: 'ACTIVE'| 'MAINTENANCE'| 'RETIRED'|'IN_USE',
-    currentMileage:string,
+    status: 'ACTIVE' | 'MAINTENANCE' | 'RETIRED' | 'IN_USE',
+    currentMileage: string,
     fuelType: 'PETROL' | 'DIESEL' | 'ELECTRIC' | 'HYBRID',
     fuelCapacity: string,
     currentFuelLevel: string,
     averageFuelConsumption: string,
-    lastMaintenanceDate: Date | null,
-    nextMaintenanceDate: Date | null,
-    gpsDeviceId: string | null,
+    lastMaintenanceDate: string ,
+    nextMaintenanceDate: string ,
+    gpsDeviceId: string ,
     currentLocation: { lat: number; lng: number } | null,
     assignedDepartment: string | null,
-    insuranceExpiryDate: Date | null,
-    registrationExpiryDate: Date | null,
-    purchaseDate: Date | null,
+    insuranceExpiryDate: string,
+    registrationExpiryDate: string,
+    purchaseDate: string,
     purchasePrice: string | null,
     residualValue: string | null
 ) {
-    return await db.insert(vehicles).values({
-        brand,
-        fuelType,
-        model,
-        year,
-        registrationNumber,
-        vin,
-        assignedDepartment,
-        averageFuelConsumption,
-        currentFuelLevel,
-        currentLocation,
-        fuelCapacity,
-        gpsDeviceId,
-        lastMaintenanceDate,
-        nextMaintenanceDate,
-        purchaseDate,
-        insuranceExpiryDate,
-        purchasePrice,
-        registrationExpiryDate,
-        residualValue,
-        currentMileage,
-        status,        
-    }).returning();
+    // Validate lastMaintenanceDate
+    // if (lastMaintenanceDate) {
+        const parsedLastMaintenanceDate = new Date(lastMaintenanceDate);
+        if (isNaN(parsedLastMaintenanceDate.getTime())) {
+            throw new Error('Invalid last maintenance date');
+        }
+    // }
+
+    // Validate nextMaintenanceDate
+    // if (nextMaintenanceDate) {
+        const parsedNextMaintenanceDate = new Date(nextMaintenanceDate);
+        if (isNaN(parsedNextMaintenanceDate.getTime())) {
+            throw new Error('Invalid next maintenance date');
+        }
+    // }
+
+    // Validate insuranceExpiryDate
+    // if (insuranceExpiryDate) {
+        const parsedInsuranceExpiryDate = new Date(insuranceExpiryDate);
+        if (isNaN(parsedInsuranceExpiryDate.getTime())) {
+            throw new Error('Invalid insurance expiry date');
+        }
+    // }
+
+    // Validate registrationExpiryDate
+    // if (registrationExpiryDate) {
+        const parsedRegistrationExpiryDate = new Date(registrationExpiryDate);
+        if (isNaN(parsedRegistrationExpiryDate.getTime())) {
+            throw new Error('Invalid registration expiry date');
+        }
+    // }
+
+    // Validate purchaseDate
+    // if (purchaseDate) {
+        const parsedPurchaseDate = new Date(purchaseDate);
+        if (isNaN(parsedPurchaseDate.getTime())) {
+            throw new Error('Invalid purchase date');
+        }
+    // }
+
+    try {
+        return await db.insert(vehicles).values({
+            brand,
+            model,
+            year,
+            registrationNumber,
+            vin,
+            status,
+            currentMileage,
+            fuelType,
+            fuelCapacity,
+            currentFuelLevel,
+            averageFuelConsumption,
+            lastMaintenanceDate:parsedLastMaintenanceDate,
+            nextMaintenanceDate:parsedNextMaintenanceDate,
+            gpsDeviceId,
+            currentLocation,
+            assignedDepartment,
+            insuranceExpiryDate:parsedInsuranceExpiryDate,
+            registrationExpiryDate:parsedRegistrationExpiryDate,
+            purchaseDate:parsedPurchaseDate,
+            purchasePrice,
+            residualValue,
+        });
+    } catch (error) {
+        console.error('Error adding vehicle:', error);
+        throw new Error('Failed to add vehicle. Please check the input data or database connection.');
+    }
 }
+
+
+
+
 
 // Update an existing vehicle
 export async function updateVehicle(

@@ -36,8 +36,7 @@ export class RepairController{
                 repairCost,
                 repairDate,
                 vehicleId,
-                createdAt,
-                updatedAt);
+                );
             return c.json(newRepair, 201);
         } catch (error) {
             return c.json({ message: 'Error adding repair', error }, 500);

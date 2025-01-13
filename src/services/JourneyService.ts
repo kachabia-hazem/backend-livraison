@@ -10,28 +10,28 @@ export async function getJourneyById(id: number) {
     }
 export async function addJourney(
         driverId:string,
-        startDateTime:Date,
+        startDateTime:string,
         startLocation:{ lat: number; lng: number },
         endLocation:{ lat: number; lng: number },
         vehicleId:string,
         actualRoute:string,
         costAllocation:string,
         status: 'PLANNED' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED',
-        createdAt:Date,
-        updatedAt:Date
     ): Promise<void> {
         try  {
+            const parsedstartDateTime = new Date(startDateTime);
+            if (isNaN(parsedstartDateTime.getTime())) {
+                throw new Error('Invalid insurance expiry date');
+            }
         await db.insert(journeys).values({
             driverId,
-            startDateTime,
+            startDateTime:parsedstartDateTime,
             startLocation,
             endLocation,
             vehicleId,
             actualRoute,
             costAllocation,
             status,
-            createdAt,
-            updatedAt
         })
     } catch (err) {
     if (err instanceof Error) {

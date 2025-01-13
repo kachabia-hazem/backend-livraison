@@ -28,13 +28,13 @@ export class MaintenanceController{
                 maintenanceDate,
                 maintenanceType,
                 vehicleId,
-                createdAt} = await c.req.json();
-            const newMaintenance = await addMaintenance( maintenanceCost,
+                } = await c.req.json();
+            const newMaintenance = await addMaintenance( 
                 maintenanceDescription,
                 maintenanceDate,
                 maintenanceType,
-                vehicleId,
-                createdAt);
+                maintenanceCost,
+                vehicleId);
             return c.json(newMaintenance, 201);
         } catch (error) {
             return c.json({ message: 'Error adding maintenance', error }, 500);

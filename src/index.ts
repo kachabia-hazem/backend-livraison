@@ -7,7 +7,10 @@ import { journeyRoutes } from './routes/Journey.route.js';
 import { maintenanceRoutes } from './routes/Maintenance.route.js';
 import repairRoutes from './routes/Repair.route.js';
 import { checkDbConnection } from './db/connection.js';
-
+import { vehicleRoutes } from './routes/Vehicle.route.js';
+import { reportRoutes } from './routes/Report.route.js';
+import { supplierRoutes } from './routes/Supplier.route.js';
+import { sectorRoutes } from './routes/Sector.route.js';
 const app = new Hono();
 
 // Define routes
@@ -16,7 +19,11 @@ app.route('/api/drivers', driverRoutes);
 app.route('/api/insurance', insuranceRoutes);
 app.route('/api/journey', journeyRoutes);
 app.route('/api/maintenance', maintenanceRoutes);
-app.route('/api/maintenance', repairRoutes);
+app.route('/api/vehicle', vehicleRoutes);
+app.route('/api/repair', repairRoutes);
+app.route('/api/report', reportRoutes);
+app.route('/api/supplier', supplierRoutes);
+app.route('/api/sector', sectorRoutes);
 
 
 app;

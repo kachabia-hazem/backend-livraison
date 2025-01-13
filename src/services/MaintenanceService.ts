@@ -11,21 +11,35 @@ export async function getMaintenanceById(id: number) {
         return await db.select().from(maintenance).where(eq(maintenance.id, id.toString()));
     }
 export async function addMaintenance(
-        maintenanceCost: string,
-        maintenanceType: string,
         maintenanceDescription: string,
         maintenanceDate: Date,
-        createdAt: Date,
+        maintenanceType: string,
+        maintenanceCost: string,
         vehicleId:string
+
     ) {
+        try {
+            const parsedMaintenanceDate = new Date(maintenanceDate);
+            if (isNaN(parsedMaintenanceDate.getTime())) {
+                throw new Error('Invalid maintenance date');
+            }
         return await db.insert(maintenance).values({
             maintenanceCost,
             maintenanceDescription,
-            maintenanceDate,
+            maintenanceDate: parsedMaintenanceDate,
             maintenanceType,
             vehicleId,
-            createdAt
         })
+    
+    } catch (err) {
+        if (err instanceof Error) {
+          console.error('Error in Mantenance:', err.message);
+          throw new Error('Failed to add insurance: ' + err.message);
+        } else {
+          console.error('Unknown error in addInsurance:', err);
+          throw new Error('Failed to add insurance due to an unknown error');
+        }
+      }
     }
 export async function updateMaintenance(id: number,
         maintenanceCost: string,

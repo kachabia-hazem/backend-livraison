@@ -14,17 +14,27 @@ export async function addSector(
         city: string,
         delegation: string,
         idVehicle: string,
-        createdAt:Date,
 
     ) {
+        try
+        {
+         
         return await db.insert(sectors).values({
             name,
             city,
             delegation,
             idVehicle,
-            createdAt,
         }).returning();
-    }
+    } catch (err) {
+        if (err instanceof Error) {
+          console.error('Error in Sector:', err.message);
+          throw new Error('Failed to add insurance: ' + err.message);
+        } else {
+          console.error('Unknown error in addInsurance:', err);
+          throw new Error('Failed to add insurance due to an unknown error');
+        }
+      }}    
+
 export async function updateSector(id: number, 
         name: string,
         city: string,

@@ -14,25 +14,30 @@ export async function getInsuranceById(id: string) {
 
 // Add insurance
 export async function addInsurance(
-  dateInsurence: Date,
-  insuranceExpiryDate: Date,
-  price: number,
-  provider: string,
-  type: string,
   vehicleId: string,
-  createdAt: Date,
-  updatedAt: Date
+  type: string,
+  provider: string,
+  dateInsurence: string,
+  insuranceExpiryDate: string,
+  price: number,
 ): Promise<void> {
   try {
+    console.log('insuranceExpiryDate',insuranceExpiryDate);
+    const parseddateInsurence = new Date(dateInsurence);
+    if (isNaN(parseddateInsurence.getTime())) {
+        throw new Error('Invalid insurance expiry date');
+    }
+    const parsedInsuranceExpiryDate = new Date(insuranceExpiryDate);
+    if (isNaN(parsedInsuranceExpiryDate.getTime())) {
+        throw new Error('Invalid insurance expiry date');
+    }
     await db.insert(insurance).values({
       vehicleId,
       type,
       provider,
-      dateInsurence,
-      insuranceExpiryDate,
+      dateInsurence:parseddateInsurence,
+      insuranceExpiryDate:parseddateInsurence,
       price: price.toString(), // Ensure price is passed as a string if required
-      createdAt,
-      updatedAt,
     });
   } catch (err) {
     if (err instanceof Error) {

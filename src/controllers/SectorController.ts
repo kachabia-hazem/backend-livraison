@@ -27,12 +27,12 @@ import { addSector, deleteSector, getAllSectors, getSectorById, updateSector } f
                     city,
                     delegation,
                     idVehicle,
-                    createdAt,} = await c.req.json();
+                    } = await c.req.json();
                 const newSector = await addSector( name,
                     city,
                     delegation,
                     idVehicle,
-                    createdAt,);
+                    );
                 return c.json(newSector, 201);
             } catch (error) {
                 return c.json({ message: 'Error adding sector', error }, 500);
